@@ -1,0 +1,64 @@
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
+  integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+  var btn_reg = document.getElementById("btn-registrar");
+  btn_reg.onclick = function (e) {
+    e.preventDefault();
+    a = document.getElementById("nombres").value;
+    b = document.getElementById("apellidos").value;
+    c = document.getElementById("correo").value;
+    d = document.getElementById("contraseña").value;
+    /*document.getElementById('butsubmit').disabled = true
+            document.getElementById('butsubmit').style.display = 'none'
+            
+
+
+           document.getElementById('loaderr').style.display = 'flex'*/
+
+    google.script.run.withSuccessHandler(r).registrar(a, b, c, d);
+  };
+
+  const r = (output) => {
+    if (output.status === "200") {
+      console.log("bienvenido");
+
+      toastr["success"]("Registro guardado correctamente");
+      document.getElementById("nombres").value="";
+      document.getElementById("apellidos").value="";
+      document.getElementById("correo").value="";
+      document.getElementById("contraseña").value="";
+    }
+    if (output.status === "404" && output.error === "unknown") {
+      // document.getElementById('errormail').style.display = 'block'
+      toastr["error"]("Usuario registrado");
+      document.getElementById("btn-registrar").disabled = false;
+
+      document.getElementById("btn-registrar").style.display = "inline-flex";
+      // document.getElementById("loaderr").style.display = "none";
+    }
+  };
+
+  toastr.options = {
+    closeButton: true,
+    debug: false,
+    newestOnTop: false,
+    progressBar: false,
+    positionClass: "toast-top-center",
+    preventDuplicates: false,
+    onclick: null,
+    showDuration: "200",
+    hideDuration: "500",
+    timeOut: "2500",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+  };
+</script>
