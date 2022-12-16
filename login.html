@@ -105,12 +105,14 @@
 
 
     </section>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
 
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         const subform = document.getElementById("form")
@@ -118,16 +120,17 @@
             e.preventDefault()
             a = e.target[0].value
             b = e.target[1].value
+            var hash = CryptoJS.SHA256(b).toString()
             document.getElementById('butsubmit').disabled = true
             document.getElementById('butsubmit').style.display = 'none'
             
-    console.log(a + b)
+    console.log(`b y ${hash}`)
 
             document.getElementById('loaderr').style.display = 'flex'
 
 
 
-            google.script.run.withSuccessHandler(ab).getuser(a, b)
+            google.script.run.withSuccessHandler(ab)?.getuser(a, hash)
         }
 
         const ab = (output) => {
@@ -135,10 +138,11 @@
                 console.log('bienvenido')
                 console.log(output)
 
-                toastr["success"]("Bienvenido weon")
+                toastr["success"](`Bienvenido weon ${output.nombrecompleto}`)
                 document.getElementById('butsubmit').style.display = 'inline-flex'
                 document.getElementById('loaderr').style.display = 'none'
                 document.getElementById('butsubmit').disabled = false
+             
                 
             }
              else if (output.status === '401') {
