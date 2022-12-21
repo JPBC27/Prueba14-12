@@ -19,9 +19,12 @@ function registrar(nombre, apellido, correo, contrasenia){
     if(repetido(correo)=='false'){
         obj={status: "404", error: 'unknown' }
     }
+    /*else if(correo.toString()=="" || nombre.toString()=="" || apellido.toString()=="" || contrasenia=="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"){
+        obj={status: "404", error: 'error'}
+    }*/
     else{
         obj={status: "200"}
-        ws.appendRow([correo,`'${contrasenia}`,`'${nombre}`,`'${apellido}`]);
+        ws.appendRow([correo,contrasenia,`'${nombre}`,`'${apellido}`]);
  
     }
   
