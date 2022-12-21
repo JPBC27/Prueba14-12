@@ -1,9 +1,9 @@
 {
   "timeZone": "America/New_York",
-  "dependencies": {},
-  "webapp": {
-    "executeAs": "USER_DEPLOYING",
-    "access": "ANYONE_ANONYMOUS"
+  "dependencies": {
+  },"webapp": {
+    "access": "MYSELF",
+    "executeAs": "USER_DEPLOYING"
   },
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8"
