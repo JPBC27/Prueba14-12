@@ -67,6 +67,7 @@
         }
     </style>
     <section class="container section">
+        <button id="btn-reg-log" class="btn btn-primary">Registrar</button>
         <h1>Iniciar Sesión</h1>
         </br>
         <div class="cuerpo-form">
@@ -105,17 +106,24 @@
 
 
     </section>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
         integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
 
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"
+        integrity="sha512-E8QSvWZ0eCLGk4km3hxSsNmGWbLtSCSUcewDQPQWZF6pEU8GlT8a5fF32wOl1i8ftdMhssTrF/OhyGWwonTcXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         const subform = document.getElementById("form")
+        const btn_reg = document.getElementById("btn-reg-log")
+        btn_reg.onclick = () => {
+            window.open(<?= test[1] ?>, '_top')
+        }
+
         subform.onsubmit = (e) => {
             e.preventDefault()
             a = e.target[0].value
@@ -123,8 +131,8 @@
             var hash = CryptoJS.SHA256(b).toString()
             document.getElementById('butsubmit').disabled = true
             document.getElementById('butsubmit').style.display = 'none'
-            
-    console.log(`b y ${hash}`)
+
+            console.log(`b y ${hash}`)
 
             document.getElementById('loaderr').style.display = 'flex'
 
@@ -139,31 +147,46 @@
                 console.log(output)
 
                 toastr["success"](`Bienvenido weon ${output.nombrecompleto}`)
-                document.getElementById('butsubmit').style.display = 'inline-flex'
-                document.getElementById('loaderr').style.display = 'none'
-                document.getElementById('butsubmit').disabled = false
-             
+                // document.getElementById('butsubmit').style.display = 'inline-flex'
+                // document.getElementById('loaderr').style.display = 'none'
+                // document.getElementById('butsubmit').disabled = false
+                var obj = {
+                    status: 'ok',
+                    nombre: output.nombrecompleto
+                }
+                var date = new Date();
+                var current_date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                var current_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                var val1 = CryptoJS.SHA512('authUser').toString()
+                var va2 = CryptoJS.SHA512(current_date + current_time + output.nombrecompleto).toString()
                 
+                localStorage.setItem('datos', JSON.stringify(obj))
+                localStorage.setItem(val1, va2)
+
+                window.open(<?= test[0] ?>, '_top')
+
+
+
             }
-             else if (output.status === '401') {
-               console.log(output)
+            else if (output.status === '401') {
+                console.log(output)
                 toastr["warning"]("Contraseña incorrecta")
                 document.getElementById('butsubmit').disabled = false
                 document.getElementById('butsubmit').style.display = 'inline-flex'
-                 document.getElementById('loaderr').style.display = 'none'
+                document.getElementById('loaderr').style.display = 'none'
 
-                
+
                 // document.getElementById('errorcred').style.display = 'block'
                 // console.log('datos incorrectos')
 
             }
 
-            else if (output.status === '404' ) {
-              console.log(output)
+            else if (output.status === '404') {
+                console.log(output)
                 // document.getElementById('errormail').style.display = 'block'
                 // console.log('usuario no registrado')
                 toastr["error"]("Usuario no registrado")
-            document.getElementById('butsubmit').disabled = false
+                document.getElementById('butsubmit').disabled = false
 
                 document.getElementById('butsubmit').style.display = 'inline-flex'
                 document.getElementById('loaderr').style.display = 'none'

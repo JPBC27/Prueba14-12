@@ -38,3 +38,7 @@ function getuser(email, password) {
  
 return obj
 }
+
+
+//get all datas
+

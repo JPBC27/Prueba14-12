@@ -7,13 +7,60 @@
 // }
 
 
-function doGet() {
-  var template = HtmlService.createTemplateFromFile('login');
-  var output = template.evaluate();
-  var htmlOutput = HtmlService.createHtmlOutput(output);
-  htmlOutput.addMetaTag('viewport', 'width=device-width, initial-scale=1');
-  return htmlOutput;
+// function doGet() {
+//   var template = HtmlService.createTemplateFromFile('login');
+//   var output = template.evaluate();
+//   var htmlOutput = HtmlService.createHtmlOutput(output);
+//   htmlOutput.addMetaTag('viewport', 'width=device-width, initial-scale=1');
+//   return htmlOutput;
+// }
+
+
+function doGet(e) {
+  if(e.parameter.page){
+    var pageName = e.parameter.page.trim().toLowerCase();
+    if (pageName !== "login"){
+      var template = HtmlService.createTemplateFromFile(pageName);
+      template.url = getPageUrl();
+      var output = template.evaluate();
+      var htmlOutput = HtmlService.createHtmlOutput(output);   
+     htmlOutput.addMetaTag('viewport', 'width=device-width, initial-scale=1');   
+      return htmlOutput;
+    }else{
+      return homePage();
+    }
+  }else{
+    return homePage();
+  }
 }
+
+
+function homePage(){
+  var pages = ['index' , 'registro'];
+var urls = pages.map(function(name){
+ return getPageUrl(name);
+});
+var template = HtmlService.createTemplateFromFile("login");
+template.test = urls;
+var output = template.evaluate();
+var htmlOutput = HtmlService.createHtmlOutput(output);   
+  htmlOutput.addMetaTag('viewport', 'width=device-width, initial-scale=1');   
+
+return htmlOutput;
+}
+
+
+function getPageUrl(name){
+  if (name){
+    var url = ScriptApp.getService().getUrl();
+    return url + "?page=" + name;
+  }else{
+    return ScriptApp.getService().getUrl();
+  }
+}
+
+
+//============
     
 function include(filename){
     return HtmlService.createHtmlOutputFromFile(filename).getContent();
@@ -58,4 +105,7 @@ function repetido(x){
     return a;
   
   }
+
+
+
 

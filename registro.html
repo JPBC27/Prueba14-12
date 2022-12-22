@@ -17,6 +17,7 @@
 
 <body>
   <section>
+    <button id="back-log" class="btn btn-primary">Regresar</button>
     <form id="form-reg">
       <div class="container registro row">
         <h2>Registro</h2>
@@ -68,6 +69,11 @@
   </section>
 
   <script type="text/javascript">
+
+const back_log = document.getElementById("back-log") 
+        back_log.onclick = () =>{
+          window.open(<?= url ?>,'_top')
+        }
     function mostrarPassword() {
       var cambio = document.getElementById("contraseña");
       if (cambio.type == "password") {
