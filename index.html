@@ -13,17 +13,26 @@
     <button id="btn-salir" class="btn btn-warning">Salir</button>
   </section>
     <script>
-  if (!localStorage.getItem('datos')) {
-document.getElementById("wrap").style.display = 'none'
-alert("requiere iniciar sesion")
-        
-      }
+ 
     var btn_salir = document.getElementById("btn-salir");
     btn_salir.onclick = () => {
       localStorage.clear();
       window.open(<?= url ?>,'_top')
     }
     window.addEventListener("load", function(){
+
+      if (!localStorage.getItem('datos')) {
+document.getElementById("wrap").style.display = 'none'
+var Backlen=history.length;  
+// console.log(Backlen);
+// history.go(-1);
+  // google.script.run.test();
+
+  alert("requiere inicio de sesion")
+
+
+        
+      }
     try {
       var x = JSON.parse(localStorage.getItem('datos'))
       // alert(x.nombre)

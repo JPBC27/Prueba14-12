@@ -106,6 +106,11 @@ function repetido(x){
   
   }
 
+  function test() 
+  {
+   return ScriptApp.getService().getUrl(); 
+  }
+
 
 
 
